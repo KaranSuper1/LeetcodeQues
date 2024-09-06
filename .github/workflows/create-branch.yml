@@ -1,0 +1,25 @@
+name: Create Branch
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  create_branch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Create Branch
+        run: |
+          python3 -c "import sys; print(sys.argv[1:])"
+          if [ $# -eq 0 ]; then
+            echo "Please provide a branch name as an argument."
+            exit 1
+          fi
+          branch_name=$1
+          git checkout -b "$branch_name"
+          git push -u origin "$branch_name"
