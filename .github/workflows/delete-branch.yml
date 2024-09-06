@@ -1,0 +1,21 @@
+name: Delete Branch
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch_name:
+        description: The name of the branch to delete
+        required: true
+
+jobs:
+  create-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Delete branch
+        run: |
+          git checkout main
+          git branch -d ${{ github.event.inputs.branch_name }}
+          git push origin --delete ${{ github.event.inputs.branch_name }}
