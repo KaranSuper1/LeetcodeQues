@@ -27,5 +27,4 @@ jobs:
       - name: Delete branch
         run: |
           git checkout main
-          git branch -d ${{ github.event.inputs.branch_name }}
           git push origin --delete ${{ github.event.inputs.branch_name }}
